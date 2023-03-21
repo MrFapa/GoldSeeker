@@ -377,7 +377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapSize: 256
   waterTh: 0.5
-  noiseScale: 0.1
+  noiseScale: 0.05
   noiseOctaves: 1
 --- !u!4 &2035894333
 Transform:
