@@ -92,8 +92,8 @@ public class Map
 
             if (newIslandTiles.Count > MapSettingsManager.Instance.islandTh)
             {
-                Island newIsland = new Island(newIslandTiles);
-                islandCenterPoint = islandCenterPoint / newIsland.IslandSize;
+                islandCenterPoint = islandCenterPoint / newIslandTiles.Count;
+                Island newIsland = new Island(newIslandTiles, islandCenterPoint);
                 newIslands.Add(newIsland);
             }
 

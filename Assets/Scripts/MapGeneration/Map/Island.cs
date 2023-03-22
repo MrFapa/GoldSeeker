@@ -35,9 +35,10 @@ public class Island
         }
     }
 
-    public Island (List<MapTile> tiles)
+    public Island (List<MapTile> tiles, Vector2 centerPoint = default(Vector2))
     {
         this.tiles = tiles;
+        this.centerPoint = centerPoint;
     }
 
     private void CalculateCenterPoint()

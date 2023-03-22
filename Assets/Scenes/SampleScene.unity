@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 8032352179740722763, guid: 5a603962c101a3244a30c12408d2659c, type: 3}
+  islandCenterPrefab: {fileID: 0}
 --- !u!4 &454636017
 Transform:
   m_ObjectHideFlags: 0
