@@ -197,8 +197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f043e35a7ba0e43a714e4a4c24051d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 8032352179740722763, guid: 5a603962c101a3244a30c12408d2659c, type: 3}
-  islandCenterPrefab: {fileID: 0}
+  landPrefab: {fileID: 8032352179740722763, guid: 5a603962c101a3244a30c12408d2659c, type: 3}
+  waterPrefab: {fileID: 84838303845471786, guid: 1d8c3e6302a707b4f9d31fa2cae9db61, type: 3}
+  islandCenterPrefab: {fileID: 4444998382371210284, guid: 63d9fbe049a0af64e912ebf32d60a438, type: 3}
 --- !u!4 &454636017
 Transform:
   m_ObjectHideFlags: 0
@@ -421,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06098f4676a0d6f4c94e8da6484439c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSize: 250
+  mapSize: 125
   islandTh: 6
   waterTh: 0.5
   noiseScale: 0.05

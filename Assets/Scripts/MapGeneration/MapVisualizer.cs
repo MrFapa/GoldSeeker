@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MapVisualizer : MonoBehaviour
 {
-    public GameObject cubePrefab;
+    public GameObject landPrefab;
+    public GameObject waterPrefab;
     public GameObject islandCenterPrefab;
 
     public void Visualize(MapTile[,] map)
@@ -15,8 +16,8 @@ public class MapVisualizer : MonoBehaviour
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                GameObject cube = Instantiate(cubePrefab, new Vector3(i, 0, j), Quaternion.identity, this.transform);
-                cube.SetActive(map[i, j].IsLand);
+                GameObject tilePrefab = (map[i, j].IsLand) ? landPrefab : waterPrefab;
+                GameObject cube = Instantiate(tilePrefab, new Vector3(i, 0, j), Quaternion.identity, this.transform);
             }
         }
     }
@@ -29,8 +30,8 @@ public class MapVisualizer : MonoBehaviour
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                GameObject cube = Instantiate(cubePrefab, new Vector3(i, 0, j), Quaternion.identity, this.transform);
-                cube.SetActive(map[i, j]);
+                GameObject tilePrefab = (map[i, j]) ? landPrefab : waterPrefab;
+                GameObject cube = Instantiate(tilePrefab, new Vector3(i, 0, j), Quaternion.identity, this.transform);
             }
         }
     }
