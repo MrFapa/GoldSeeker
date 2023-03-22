@@ -5,6 +5,7 @@ using UnityEngine;
 public class MapVisualizer : MonoBehaviour
 {
     public GameObject cubePrefab;
+    public GameObject islandCenterPrefab;
 
     public void Visualize(MapTile[,] map)
     {
@@ -34,5 +35,12 @@ public class MapVisualizer : MonoBehaviour
         }
     }
 
-
+    public void VisualizeIslandCenters(List<Island> islands)
+    {
+        foreach (Island island in islands)
+        {
+            Vector3 position = new Vector3(island.CenterPoint.x, 1, island.CenterPoint.y);
+            Instantiate(islandCenterPrefab, position, Quaternion.identity);
+        }
+    }
 }

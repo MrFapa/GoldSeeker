@@ -8,6 +8,11 @@ public class MapManager : MonoBehaviour
 
     private Map map;
 
+    public Map Map
+    {
+        get => map;
+    }
+
     private static MapManager _instance;
     public static MapManager Instance
     {
@@ -32,8 +37,7 @@ public class MapManager : MonoBehaviour
 
         this.map = new Map(SimpleNoiseGenerator.GenerateMap());
 
-        Debug.Log(Time.realtimeSinceStartup);
         mapVisualizer.Visualize(map.TilesMap);
-        Debug.Log(Time.realtimeSinceStartup);
+        mapVisualizer.VisualizeIslandCenters(map.Islands);
     }
 }
