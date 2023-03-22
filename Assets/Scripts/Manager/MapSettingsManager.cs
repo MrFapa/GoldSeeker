@@ -6,6 +6,9 @@ public class MapSettingsManager : MonoBehaviour
 {
 
     public int mapSize = 64;
+    public int islandTh = 6;
+
+
     public float waterTh = 0.5f;
     public float noiseScale = 0.1f;
     [Range(1, 1)]
