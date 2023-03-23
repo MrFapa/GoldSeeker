@@ -199,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   landPrefab: {fileID: 8032352179740722763, guid: 5a603962c101a3244a30c12408d2659c, type: 3}
   waterPrefab: {fileID: 84838303845471786, guid: 1d8c3e6302a707b4f9d31fa2cae9db61, type: 3}
+  rockPrefab: {fileID: 6570232713178507465, guid: 501e40c11c65ba34e91d3647b5e7b223, type: 3}
   islandCenterPrefab: {fileID: 4444998382371210284, guid: 63d9fbe049a0af64e912ebf32d60a438, type: 3}
 --- !u!4 &454636017
 Transform:
@@ -424,9 +425,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapSize: 125
   islandTh: 6
-  waterTh: 0.5
-  noiseScale: 0.05
-  noiseOctaves: 1
+  baseMapSettings:
+    threshold: 0.5
+    scale: 0.05
+    octaves: 1
+  waterObstacleSettings:
+    threshold: 0.75
+    scale: 0.2
+    octaves: 1
 --- !u!4 &2035894333
 Transform:
   m_ObjectHideFlags: 0

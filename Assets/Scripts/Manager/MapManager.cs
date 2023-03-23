@@ -13,6 +13,8 @@ public class MapManager : MonoBehaviour
         get => map;
     }
 
+    private bool[,] waterObstacles;
+
     private static MapManager _instance;
     public static MapManager Instance
     {
@@ -35,9 +37,11 @@ public class MapManager : MonoBehaviour
             _instance = this;
         }
 
-        this.map = new Map(SimpleNoiseGenerator.GenerateMap());
+        this.waterObstacles = SimpleNoiseGenerator.GenerateMap(MapSettingsManager.Instance.waterObstacleSettings);
+        this.map = new Map(SimpleNoiseGenerator.GenerateMap(MapSettingsManager.Instance.baseMapSettings), this.waterObstacles);
+        
 
-        mapVisualizer.Visualize(map.TilesMap);
+        mapVisualizer.Visualize(this.map.TilesMap);
         mapVisualizer.VisualizeIslandCenters(map.Islands);
     }
 }

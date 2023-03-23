@@ -8,17 +8,22 @@ public class Map
     private bool[,] primitiveMap;
     public bool[,] PrimitiveMap { get => primitiveMap; set => primitiveMap = value; }
 
+    private bool[,] obstacleMap;
+    public bool[,] ObstacleMap { get => obstacleMap; set => obstacleMap = value; }
+
     private MapTile[,] tilesMap;
     public MapTile[,] TilesMap { get => tilesMap; set => tilesMap = value; }
+
 
     private List<Island> islands;
     public List<Island> Islands { get => islands; }
 
     public int Size { get => primitiveMap.GetLength(0); }
 
-    public Map(bool[,] map)
+    public Map(bool[,] map, bool[,] obstacleMap)
     {
         this.primitiveMap = map;
+        this.obstacleMap = obstacleMap;
         this.tilesMap = new MapTile[Size, Size];
         InitMap();
 
@@ -37,7 +42,8 @@ public class Map
         {
             for (int j = 0; j < this.Size; j++)
             {
-                this.tilesMap[i, j] = new MapTile(new Vector2(i,j), this.primitiveMap[i, j]);
+                bool waterObstacle = obstacleMap[i, j] && !primitiveMap[i, j];
+                this.tilesMap[i, j] = new MapTile(new Vector2(i,j), this.primitiveMap[i, j], waterObstacle);
             }
         }
         return this.tilesMap;

@@ -9,12 +9,10 @@ public class MapSettingsManager : MonoBehaviour
     public int islandTh = 6;
 
 
-    public float waterTh = 0.5f;
-    public float noiseScale = 0.1f;
-    [Range(1, 1)]
-    public int noiseOctaves = 1;
+    public SimpleNoiseSettings baseMapSettings;
+    public SimpleNoiseSettings waterObstacleSettings;
 
-
+    public Dictionary<Vector3, int> test;
 
     private static MapSettingsManager _instance;
     public static MapSettingsManager Instance
@@ -38,4 +36,13 @@ public class MapSettingsManager : MonoBehaviour
             _instance = this;
         }
     }
+}
+
+[System.Serializable]
+public struct SimpleNoiseSettings
+{
+    public float threshold;
+    public float scale;
+    [Range(1, 4)]
+    public int octaves;
 }

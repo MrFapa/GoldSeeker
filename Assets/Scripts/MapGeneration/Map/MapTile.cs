@@ -10,9 +10,12 @@ public class MapTile
     private bool isLand;
     public bool IsLand { get => isLand; set => isLand = value; }
 
-    public MapTile(Vector2 position, bool isLand)
+    private bool hasObstacle;
+    public bool HasObstacle { get => hasObstacle; set => hasObstacle = value; }
+    public MapTile(Vector2 position, bool isLand = false, bool hasObstacle = false)
     {
         this.position = position;
         this.isLand = isLand;
+        this.hasObstacle = hasObstacle;
     }
 }
