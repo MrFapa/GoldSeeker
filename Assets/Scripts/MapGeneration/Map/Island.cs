@@ -39,6 +39,7 @@ public class Island
     {
         this.tiles = tiles;
         this.centerPoint = centerPoint;
+
     }
 
     private void CalculateCenterPoint()

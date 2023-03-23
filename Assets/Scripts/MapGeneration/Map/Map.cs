@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Map
 {
@@ -29,6 +30,16 @@ public class Map
 
         this.islands = new List<Island>();
         InitIslands();
+        int islandSize = this.islands[0].Tiles.Count;
+        Debug.Log(islandSize);
+        List<Vector2Int> path = AStar.GeneratePath(this.islands[0].Tiles[0].Position, this.islands[0].Tiles[200].Position, this.primitiveMap);
+
+        foreach (Vector2Int pos in path)
+        {
+            GameObject cube =  GameObject.CreatePrimitive(PrimitiveType.Cube);
+            cube.transform.position = new Vector3(pos.x, 1, pos.y);
+            cube.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
     }
 
     public MapTile[,] InitMap()
@@ -43,7 +54,7 @@ public class Map
             for (int j = 0; j < this.Size; j++)
             {
                 bool waterObstacle = obstacleMap[i, j] && !primitiveMap[i, j];
-                this.tilesMap[i, j] = new MapTile(new Vector2(i,j), this.primitiveMap[i, j], waterObstacle);
+                this.tilesMap[i, j] = new MapTile(new Vector2Int(i,j), this.primitiveMap[i, j], waterObstacle);
             }
         }
         return this.tilesMap;
@@ -93,8 +104,11 @@ public class Map
                 }
                 islandCenterPoint += currentTile.Position;
                 newIslandTiles.Add(currentTile);
+               
                 unoberserved.Remove(currentTile);
             }
+
+            //newIslandTiles.Distinct().ToList();
 
             if (newIslandTiles.Count > MapSettingsManager.Instance.islandTh)
             {
@@ -111,12 +125,12 @@ public class Map
 
     #region Helpers
 
-    public MapTile GetNeighbourTile(MapTile tile, Vector2 direction) 
+    public MapTile GetNeighbourTile(MapTile tile, Vector2Int direction) 
     {
         int x = (int) (tile.Position.x + direction.x);
         int y = (int) (tile.Position.y + direction.y);
 
-        MapTile neighbour = (x >= Size || x < 0 || y >= Size || y < 0) ? new MapTile(new Vector2(x, y), false) : this.tilesMap[x, y];
+        MapTile neighbour = (x >= Size || x < 0 || y >= Size || y < 0) ? new MapTile(new Vector2Int(x, y), false) : this.tilesMap[x, y];
         return neighbour;
     }
 
@@ -125,22 +139,12 @@ public class Map
         MapTile[] neighbours = new MapTile[4];
         for(int i = 0; i < DIRECTIONS.allDirections.Length; i++)
         {
-            Vector2 direction = DIRECTIONS.allDirections[i];
+            Vector2Int direction = DIRECTIONS.allDirections[i];
             neighbours[i] = GetNeighbourTile(tile, direction);
         }
 
         return neighbours;
     }
-
-
-    public static class DIRECTIONS
-    {
-        public static Vector2 top = new Vector2(0, -1);
-        public static Vector2 right = new Vector2(1, 0);
-        public static Vector2 bottom = new Vector2(0, 1);
-        public static Vector2 left = new Vector2(-1, 0);
-        public static Vector2[] allDirections = { top, right, bottom, left };
-    };
 
     #endregion
 }
