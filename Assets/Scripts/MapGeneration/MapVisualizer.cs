@@ -8,6 +8,7 @@ public class MapVisualizer : MonoBehaviour
     public GameObject waterPrefab;
     public GameObject rockPrefab;
     public GameObject islandCenterPrefab;
+    public GameObject bridgePrefab;
 
     public void Visualize(MapTile[,] map)
     {
@@ -59,6 +60,16 @@ public class MapVisualizer : MonoBehaviour
         {
             Vector3 position = new Vector3(island.CenterPoint.x, 1, island.CenterPoint.y);
             Instantiate(islandCenterPrefab, position, Quaternion.identity, islandHolder.transform);
+        }
+    }
+
+    public void VisualizeBridges(Bridge bridge)
+    {
+        for(int i = 0; i < bridge.Tiles.Count; i++)
+        {
+            MapTile currentTile = bridge.Tiles[i];
+            Vector3 position = new Vector3(currentTile.Position.x, 1, currentTile.Position.y);
+            Instantiate(bridgePrefab, position, Quaternion.identity);
         }
     }
 }

@@ -52,4 +52,32 @@ public class Island
         newCenterPoint = newCenterPoint / IslandSize;
         this.centerPoint = newCenterPoint;
     }
+
+    public MapTile FindClosestMapTileTo(MapTile tile)
+    {
+        return FindClosestMapTileTo(tile.Position);
+    }
+
+    public MapTile FindClosestMapTileTo(Vector2Int dest)
+    {
+        MapTile closestTile = null;
+        float t = 0;
+        while (closestTile == null)
+        {
+
+            Vector2Int pos = MathLib.VectorToVectorInt(Vector2.Lerp((Vector2) dest, this.CenterPoint, t));
+            foreach(MapTile tile in this.tiles)
+            {
+                if (pos == tile.Position)
+                {
+                    return tile;
+                }
+            }
+
+            t += 0.01f;
+            if (t > 1.5f) break;
+        }
+
+        return default(MapTile);
+    }
 }

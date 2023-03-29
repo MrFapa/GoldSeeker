@@ -201,6 +201,7 @@ MonoBehaviour:
   waterPrefab: {fileID: 84838303845471786, guid: 1d8c3e6302a707b4f9d31fa2cae9db61, type: 3}
   rockPrefab: {fileID: 6570232713178507465, guid: 501e40c11c65ba34e91d3647b5e7b223, type: 3}
   islandCenterPrefab: {fileID: 4444998382371210284, guid: 63d9fbe049a0af64e912ebf32d60a438, type: 3}
+  bridgePrefab: {fileID: 5958331460609590599, guid: cb7eb42bd364f4343b64621eeb7011e2, type: 3}
 --- !u!4 &454636017
 Transform:
   m_ObjectHideFlags: 0
@@ -423,15 +424,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06098f4676a0d6f4c94e8da6484439c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSize: 125
+  mapSize: 250
   islandTh: 6
   baseMapSettings:
     threshold: 0.5
-    scale: 0.05
+    scale: 0.03
     octaves: 1
   waterObstacleSettings:
     threshold: 0.75
-    scale: 0.2
+    scale: 0.1
     octaves: 1
 --- !u!4 &2035894333
 Transform:

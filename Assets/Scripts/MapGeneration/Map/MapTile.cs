@@ -18,4 +18,6 @@ public class MapTile
         this.isLand = isLand;
         this.hasObstacle = hasObstacle;
     }
+
+    public MapTile() : this(new Vector2Int(0, 0)) { }
 }

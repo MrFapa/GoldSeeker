@@ -19,6 +19,8 @@ public class Map
     private List<Island> islands;
     public List<Island> Islands { get => islands; }
 
+    public Bridge bridge;
+
     public int Size { get => primitiveMap.GetLength(0); }
 
     public Map(bool[,] map, bool[,] obstacleMap)
@@ -26,23 +28,19 @@ public class Map
         this.primitiveMap = map;
         this.obstacleMap = obstacleMap;
         this.tilesMap = new MapTile[Size, Size];
-        InitMap();
 
         this.islands = new List<Island>();
-        InitIslands();
-        int islandSize = this.islands[0].Tiles.Count;
-        Debug.Log(islandSize);
-        List<Vector2Int> path = AStar.GeneratePath(this.islands[0].Tiles[0].Position, this.islands[0].Tiles[200].Position, this.primitiveMap);
-
-        foreach (Vector2Int pos in path)
-        {
-            GameObject cube =  GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.transform.position = new Vector3(pos.x, 1, pos.y);
-            cube.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        }
+        
     }
 
-    public MapTile[,] InitMap()
+    public void InitMap()
+    {
+        InitTiles();
+        InitIslands();
+        InitBridges();
+    }
+
+    public MapTile[,] InitTiles()
     {
         if(this.primitiveMap == null)
         {
@@ -108,8 +106,6 @@ public class Map
                 unoberserved.Remove(currentTile);
             }
 
-            //newIslandTiles.Distinct().ToList();
-
             if (newIslandTiles.Count > MapSettingsManager.Instance.islandTh)
             {
                 islandCenterPoint = islandCenterPoint / newIslandTiles.Count;
@@ -120,6 +116,16 @@ public class Map
         }
 
         this.islands = newIslands;
+    }
+
+    public void InitBridges()
+    {
+        Island island1 = this.islands[0];
+        Island island2 = this.islands[1];
+        MapTile start = island1.FindClosestMapTileTo(island2.CenterPointRounded);
+        MapTile end = island2.FindClosestMapTileTo(island1.CenterPointRounded);
+
+        this.bridge = new Bridge(start, end);
     }
 
 
