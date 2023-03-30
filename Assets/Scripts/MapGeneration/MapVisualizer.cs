@@ -63,13 +63,21 @@ public class MapVisualizer : MonoBehaviour
         }
     }
 
-    public void VisualizeBridges(Bridge bridge)
+    public void VisualizeBridges(List<Bridge> bridges)
     {
-        for(int i = 0; i < bridge.Tiles.Count; i++)
+        GameObject bridgeHolder = new GameObject("Bridges");
+        bridgeHolder.transform.parent = this.transform;
+        foreach (Bridge bridge in bridges)
         {
-            MapTile currentTile = bridge.Tiles[i];
-            Vector3 position = new Vector3(currentTile.Position.x, 1, currentTile.Position.y);
-            Instantiate(bridgePrefab, position, Quaternion.identity);
+            GameObject singleBridge = new GameObject("Bridge");
+            singleBridge.transform.parent = bridgeHolder.transform;
+            for (int i = 0; i < bridge.Tiles.Count; i++)
+            {
+                MapTile currentTile = bridge.Tiles[i];
+                Vector3 position = new Vector3(currentTile.Position.x, 1, currentTile.Position.y);
+                Instantiate(bridgePrefab, position, Quaternion.identity, singleBridge.transform);
+            }
         }
+        
     }
 }

@@ -62,10 +62,11 @@ public class Island
     {
         MapTile closestTile = null;
         float t = 0;
+        Vector2 shiftedCenter = this.centerPoint - dest + this.centerPoint;
         while (closestTile == null)
         {
 
-            Vector2Int pos = MathLib.VectorToVectorInt(Vector2.Lerp((Vector2) dest, this.CenterPoint, t));
+            Vector2Int pos = MathLib.VectorToVectorInt(Vector2.Lerp((Vector2) dest, shiftedCenter, t));
             foreach(MapTile tile in this.tiles)
             {
                 if (pos == tile.Position)
@@ -74,7 +75,7 @@ public class Island
                 }
             }
 
-            t += 0.01f;
+            t += 0.001f;
             if (t > 1.5f) break;
         }
 

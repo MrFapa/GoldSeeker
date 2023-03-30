@@ -7,12 +7,12 @@ public class MapSettingsManager : MonoBehaviour
 
     public int mapSize = 64;
     public int islandTh = 6;
+    public Vector2Int[] islandSizes;
 
 
     public SimpleNoiseSettings baseMapSettings;
     public SimpleNoiseSettings waterObstacleSettings;
 
-    public Dictionary<Vector3, int> test;
 
     private static MapSettingsManager _instance;
     public static MapSettingsManager Instance

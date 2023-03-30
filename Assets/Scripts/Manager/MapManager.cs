@@ -43,6 +43,6 @@ public class MapManager : MonoBehaviour
 
         mapVisualizer.Visualize(this.map.TilesMap);
         mapVisualizer.VisualizeIslandCenters(this.map.Islands);
-        mapVisualizer.VisualizeBridges(this.map.bridge);
+        mapVisualizer.VisualizeBridges(this.map.Bridges);
     }
 }

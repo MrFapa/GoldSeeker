@@ -19,7 +19,9 @@ public class Map
     private List<Island> islands;
     public List<Island> Islands { get => islands; }
 
-    public Bridge bridge;
+    private List<Bridge> bridges;
+    public List<Bridge> Bridges { get => bridges; }
+
 
     public int Size { get => primitiveMap.GetLength(0); }
 
@@ -30,7 +32,8 @@ public class Map
         this.tilesMap = new MapTile[Size, Size];
 
         this.islands = new List<Island>();
-        
+        this.bridges = new List<Bridge>();
+
     }
 
     public void InitMap()
@@ -120,12 +123,7 @@ public class Map
 
     public void InitBridges()
     {
-        Island island1 = this.islands[0];
-        Island island2 = this.islands[1];
-        MapTile start = island1.FindClosestMapTileTo(island2.CenterPointRounded);
-        MapTile end = island2.FindClosestMapTileTo(island1.CenterPointRounded);
-
-        this.bridge = new Bridge(start, end);
+        this.bridges = IslandConnector.ConnectIslands(this.islands);
     }
 
 
