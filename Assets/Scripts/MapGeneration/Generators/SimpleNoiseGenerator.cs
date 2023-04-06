@@ -11,7 +11,7 @@ public class SimpleNoiseGenerator
     public static bool[,] GenerateMap(SimpleNoiseSettings noiseSettings)
     {
         int mapSize = MapSettingsManager.Instance.mapSize;
-
+        int seed = MapSettingsManager.Instance.seed;
         bool[,] map = new bool[mapSize, mapSize];
 
         for(int i = 0; i < mapSize; i++)
@@ -21,8 +21,8 @@ public class SimpleNoiseGenerator
                 float noise = 0;
                 for(int octaveIndex = 0; octaveIndex < noiseSettings.octaves; octaveIndex++)
                 {
-                    noise += Mathf.PerlinNoise( i * noiseSettings.scale * noiseFrequency[octaveIndex], 
-                                                j * noiseSettings.scale * noiseFrequency[octaveIndex]) * noiseAmplitudes[octaveIndex];
+                    noise += Mathf.PerlinNoise( (i + seed) * noiseSettings.scale * noiseFrequency[octaveIndex], 
+                                                (j + seed) * noiseSettings.scale * noiseFrequency[octaveIndex]) * noiseAmplitudes[octaveIndex];
                 }
                 map[i, j] =  noise > noiseSettings.threshold;
             }

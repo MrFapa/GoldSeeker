@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Island 
+public class Island : MapPart
 {
-    private List<MapTile> tiles;
-    public List<MapTile> Tiles { get => tiles; }
-
-    public int IslandSize { get => tiles.Count; }
-
     private Vector2 centerPoint;
     public Vector2 CenterPoint
     {
@@ -26,30 +21,23 @@ public class Island
     {
         get
         {
-            if (centerPoint == null)
-            {
-                CalculateCenterPoint();
-            }
-
-            return new Vector2Int(Mathf.RoundToInt(centerPoint.x), Mathf.RoundToInt(centerPoint.y));
+            return new Vector2Int(Mathf.RoundToInt(CenterPoint.x), Mathf.RoundToInt(CenterPoint.y));
         }
     }
 
-    public Island (List<MapTile> tiles, Vector2 centerPoint = default(Vector2))
+    public Island (List<MapTile> tiles, Vector2 centerPoint = default(Vector2)) : base(tiles) 
     {
-        this.tiles = tiles;
         this.centerPoint = centerPoint;
-
     }
 
     private void CalculateCenterPoint()
     {
         Vector2 newCenterPoint = new Vector2();
-        for(int i = 0; i < IslandSize; i++)
+        for(int i = 0; i < Size; i++)
         {
             newCenterPoint += tiles[i].Position;
         }
-        newCenterPoint = newCenterPoint / IslandSize;
+        newCenterPoint = newCenterPoint / Size;
         this.centerPoint = newCenterPoint;
     }
 

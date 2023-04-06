@@ -25,13 +25,16 @@ public class Bridge
 
     public Bridge(MapTile start, MapTile end)
     {
+        List<MapTile> tiles = new List<MapTile>();
         
         List<Vector2Int> path = Construct(start, end);
-        List<MapTile> tiles = new List<MapTile>();
-        tiles.Add(start);
-        foreach(Vector2Int pos in path)
+        if (path.Count > 0)
         {
-            tiles.Add(new MapTile(pos));
+            tiles.Add(start);
+            foreach (Vector2Int pos in path)
+            {
+                tiles.Add(new MapTile(pos));
+            }
         }
         this.tiles = tiles;
     }
@@ -39,7 +42,9 @@ public class Bridge
 
     public List<Vector2Int> Construct(MapTile start, MapTile end)
     {
-        List<Vector2Int> bridgePath = AStar.GeneratePath(start.Position, end.Position, ArrayHandler.Invert(MapManager.Instance.Map.ObstacleMap));
+
+        bool[,] passableGrid = GridCreater.CreateGrid(ACCEPTABLE.bridgeTypes, ACCEPTABLE.bridgeToppings);
+        List<Vector2Int> bridgePath = AStar.GeneratePath(start.Position, end.Position, passableGrid);
         
         return bridgePath;
     }

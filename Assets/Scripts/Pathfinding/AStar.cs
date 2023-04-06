@@ -28,10 +28,10 @@ public static class AStar
             // node with lowest distance
             foreach(Node node in open)
             {
-                if (currentNode == node) continue;
+                
 
                 if (currentNode.fCost > node.fCost || (currentNode.hCost > node.hCost && currentNode.fCost == node.fCost))
-                    {
+                {
                     currentNode = node;
                 }
             }
@@ -61,7 +61,7 @@ public static class AStar
                 if(newMoveCost < neighbour.gCost || !open.Contains(neighbour))
                 {
                     neighbour.gCost = newMoveCost;
-                    neighbour.hCost = Mathf.RoundToInt(10 * Vector2Int.Distance(neighbour.pos, endNode.pos));
+                    neighbour.hCost = Mathf.RoundToInt(100 * Vector2Int.Distance(neighbour.pos, endNode.pos));
                     neighbour.parent = currentNode;
 
                     if (!open.Contains(neighbour))

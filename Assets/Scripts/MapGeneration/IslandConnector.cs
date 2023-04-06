@@ -1,98 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public static class IslandConnector 
 {
-   public static List<Bridge> ConnectIslands(List<Island> islands)
+
+    // Prims Algorithm
+    public static List<Vector2Int> CreateConnectionTree(List<Island> islands, List<int>[] oceanIslands)
     {
-        List<Bridge> bridges = new List<Bridge>();
+        List<Vector2Int> connectionTree = new List<Vector2Int>();
 
-        List<Island> sortedIslands = islands.OrderBy(obj => obj.IslandSize).ToList();
-        int[] islandBridgeCount = new int[sortedIslands.Count];
-        int[] islandMaxBridges = GetIslandBridgeCapacity(islands);
-
-        for(int i = 0; i < sortedIslands.Count - 1; i++)
+        for(int i = 0; i < oceanIslands.Length; i++)
         {
-            if (islandBridgeCount[i] >= islandMaxBridges[i])
+            List<int> islandsToConnect = oceanIslands[i];
+
+            if (islandsToConnect.Count < 2) continue;
+
+
+            List<Vector2Int> connections = new List<Vector2Int>();
+            List<int> connectedIslands = new List<int>();
+
+            int currentIslandId = islandsToConnect[0];
+            islandsToConnect.Remove(islandsToConnect[0]);
+
+            int closestIslandId = FindClosestIsland(islands, currentIslandId, islandsToConnect);
+            connections.Add(new Vector2Int(currentIslandId, closestIslandId));
+
+            connectedIslands.Add(currentIslandId);
+            connectedIslands.Add(closestIslandId);
+            islandsToConnect.Remove(currentIslandId);
+            islandsToConnect.Remove(closestIslandId);
+
+
+            while ( islandsToConnect.Count != 0)
             {
-                continue;
+                currentIslandId = islandsToConnect[0];
+
+                closestIslandId = FindClosestIsland(islands, currentIslandId, connectedIslands);
+                connections.Add(new Vector2Int(currentIslandId, closestIslandId));
+
+                connectedIslands.Add(currentIslandId);
+                islandsToConnect.Remove(currentIslandId);
             }
 
-            MapTilePair[] bridgeEnds = new MapTilePair[sortedIslands.Count - 1 - i];
-            Island currentIsland = sortedIslands[i];
-
-            for(int j = 0; j < sortedIslands.Count - 1 - i; j++)
-            {
-
-
-                int islandIndexToMeasure = j + i + 1;
-
-                if (islandBridgeCount[islandIndexToMeasure] >= islandMaxBridges[islandIndexToMeasure])
-                {
-                    continue;
-                }
-
-                Island islandToMeasure = sortedIslands[islandIndexToMeasure];
-                MapTile currentIslandTile = currentIsland.FindClosestMapTileTo(islandToMeasure.CenterPointRounded);
-                MapTile measueredIslandTile = islandToMeasure.FindClosestMapTileTo(currentIsland.CenterPointRounded);
-
-                MapTilePair currentPair = new MapTilePair(currentIslandTile, measueredIslandTile);
-                bridgeEnds[j] = currentPair;
-            }
-
-            bridgeEnds.OrderBy(obj => obj.Distance());
-
-            for(int j = 0; j < islandMaxBridges[i] - islandBridgeCount[i]; j++)
-            {
-                if (j >= bridgeEnds.Length) break;
-                MapTilePair currentPair = bridgeEnds[j];
-                bridges.Add(new Bridge(currentPair.start, currentPair.end));
-            }
-
+            connectionTree.AddRange(connections);
         }
 
-        return bridges;
+        return connectionTree;
     }
 
 
-    private static int[] GetIslandBridgeCapacity(List<Island> islands)
+    private static int FindClosestIsland(List<Island> islands, int currentIsland, List<int> islandsToCompare)
     {
-        int[] bridgeCapacities = new int[islands.Count];
-        Vector2Int[] capacityAndThresholds = MapSettingsManager.Instance.islandSizes;
+        float closestDistance = float.PositiveInfinity;
+        int closestIslandId = -1;
 
-        for(int islandIndex = 0; islandIndex < bridgeCapacities.Length; islandIndex++)
+        Vector2Int currentIslandCenter = islands[currentIsland].CenterPointRounded;
+
+        for(int i = 0; i < islandsToCompare.Count; i++)
         {
-            Island currentIsland = islands[islandIndex];
-            bridgeCapacities[islandIndex] = 1;
-            for(int j = 0; j < capacityAndThresholds.Length; j++)
+            int idToCompare = islandsToCompare[i];
+            Vector2Int centerToCompare = islands[idToCompare].CenterPointRounded;
+
+            float dist = Vector2.Distance(currentIslandCenter, centerToCompare);
+            if (dist < closestDistance)
             {
-                int minSize = capacityAndThresholds[j].x;
-                if (currentIsland.IslandSize > minSize)
-                {
-                    bridgeCapacities[islandIndex] = capacityAndThresholds[j].y;
-                }
+                closestDistance = dist;
+                closestIslandId = idToCompare;
             }
         }
 
-        return bridgeCapacities;
-    }
-}
-
-public class MapTilePair
-{
-    public MapTile start;
-    public MapTile end;
-
-    public MapTilePair(MapTile start, MapTile end)
-    {
-        this.start = start;
-        this.end = end;
-    }
-
-    public float Distance()
-    {
-        return Vector2.Distance(start.Position, end.Position);
+        return closestIslandId;
     }
 }

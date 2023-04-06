@@ -39,7 +39,9 @@ public class MapManager : MonoBehaviour
 
         this.waterObstacles = SimpleNoiseGenerator.GenerateMap(MapSettingsManager.Instance.waterObstacleSettings);
         this.map = new Map(SimpleNoiseGenerator.GenerateMap(MapSettingsManager.Instance.baseMapSettings), this.waterObstacles);
+        Debug.Log(Time.realtimeSinceStartup);
         this.map.InitMap();
+        Debug.Log(Time.realtimeSinceStartup);
 
         mapVisualizer.Visualize(this.map.TilesMap);
         mapVisualizer.VisualizeIslandCenters(this.map.Islands);

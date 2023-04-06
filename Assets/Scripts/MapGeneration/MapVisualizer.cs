@@ -21,10 +21,10 @@ public class MapVisualizer : MonoBehaviour
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                GameObject tilePrefab = (map[i, j].IsLand) ? landPrefab : waterPrefab;
+                GameObject tilePrefab = (map[i, j].Type == TileType.land) ? landPrefab : waterPrefab;
                 GameObject cube = Instantiate(tilePrefab, new Vector3(i, 0, j), Quaternion.identity, tileHolder.transform);
 
-                if (map[i, j].HasObstacle)
+                if (map[i, j].Topping == TileTopping.stone)
                 {
                     GameObject rock = Instantiate(rockPrefab, new Vector3(i, 1, j), Quaternion.identity, tileHolder.transform);
                 }
@@ -58,7 +58,7 @@ public class MapVisualizer : MonoBehaviour
 
         foreach (Island island in islands)
         {
-            Vector3 position = new Vector3(island.CenterPoint.x, 1, island.CenterPoint.y);
+            Vector3 position = new Vector3(island.CenterPoint.x, 2, island.CenterPoint.y);
             Instantiate(islandCenterPrefab, position, Quaternion.identity, islandHolder.transform);
         }
     }

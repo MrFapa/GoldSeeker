@@ -424,7 +424,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06098f4676a0d6f4c94e8da6484439c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSize: 150
+  randomSeed: 1
+  seed: 63291
+  mapSize: 100
   islandTh: 6
   islandSizes:
   - {x: 100, y: 2}
@@ -432,7 +434,7 @@ MonoBehaviour:
   - {x: 1000, y: 4}
   baseMapSettings:
     threshold: 0.5
-    scale: 0.03
+    scale: 0.025
     octaves: 1
   waterObstacleSettings:
     threshold: 0.75

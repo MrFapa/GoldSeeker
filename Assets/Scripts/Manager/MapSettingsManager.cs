@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class MapSettingsManager : MonoBehaviour
 {
+    [Header("Seed")]
 
+    public bool randomSeed;
+    public int seed;
+
+    [Header("Overall Settings")]
     public int mapSize = 64;
     public int islandTh = 6;
     public Vector2Int[] islandSizes;
 
-
+    [Header("Noise Generation")]
     public SimpleNoiseSettings baseMapSettings;
     public SimpleNoiseSettings waterObstacleSettings;
 
@@ -24,6 +29,15 @@ public class MapSettingsManager : MonoBehaviour
             return _instance;
         }
     }
+
+    private void Awake()
+    {
+        if (randomSeed)
+        {
+            this.seed = Random.Range(0, 100000);
+        }
+    }
+
     void Start()
     {
         if (_instance != null)

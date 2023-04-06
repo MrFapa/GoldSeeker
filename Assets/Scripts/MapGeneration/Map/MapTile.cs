@@ -7,16 +7,20 @@ public class MapTile
     private Vector2Int position;
     public Vector2Int Position { get => position; }
 
-    private bool isLand;
-    public bool IsLand { get => isLand; set => isLand = value; }
+    private TileType type;
+    public TileType Type { get => type; set => type = value; }
 
-    private bool hasObstacle;
-    public bool HasObstacle { get => hasObstacle; set => hasObstacle = value; }
-    public MapTile(Vector2Int position, bool isLand = false, bool hasObstacle = false)
+    private TileTopping topping;
+    public TileTopping Topping { get => topping; set => topping = value; }
+
+    private int islandID;
+
+    public int IslandID { get => islandID; set => islandID = value; }
+    public MapTile(Vector2Int position, TileType type = TileType.undefined, TileTopping topping = TileTopping.nothing)
     {
         this.position = position;
-        this.isLand = isLand;
-        this.hasObstacle = hasObstacle;
+        this.type = type;
+        this.topping = topping;
     }
 
     public MapTile() : this(new Vector2Int(0, 0)) { }
