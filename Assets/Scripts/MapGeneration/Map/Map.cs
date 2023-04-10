@@ -222,10 +222,12 @@ public class Map
             this.bridges.Add(newBridge);
         }
 
-        Debug.Log(this.bridges.Count);
-        foreach(Bridge bridge in bridges)
+        foreach (Bridge bridge in this.bridges)
         {
-            Debug.Log(bridge.Tiles.Count);
+            foreach(MapTile tile in bridge.Tiles)
+            {
+                this.tilesMap[tile.Position.x, tile.Position.y].Topping = TileTopping.bridge;
+            }
         }
     }
 
