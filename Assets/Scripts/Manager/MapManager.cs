@@ -27,6 +27,15 @@ public class MapManager : MonoBehaviour
             return _instance;
         }
     }
+
+    void Awake()
+    {
+        this.waterObstacles = SimpleNoiseGenerator.GenerateMap(MapSettingsManager.Instance.waterObstacleSettings);
+        this.map = new Map(SimpleNoiseGenerator.GenerateMap(MapSettingsManager.Instance.baseMapSettings), this.waterObstacles);
+        this.map.InitMap();
+
+    }
+
     void Start()
     {
         if (_instance != null)
@@ -39,18 +48,25 @@ public class MapManager : MonoBehaviour
             _instance = this;
         }
 
-        this.waterObstacles = SimpleNoiseGenerator.GenerateMap(MapSettingsManager.Instance.waterObstacleSettings);
-        this.map = new Map(SimpleNoiseGenerator.GenerateMap(MapSettingsManager.Instance.baseMapSettings), this.waterObstacles);
-        this.map.InitMap();
 
         this.mapBuilder.BuildMap(this.map);
+    }
 
-        /*
-        mapVisualizer.Visualize(this.map.TilesMap);
-        mapVisualizer.VisualizeIslandCenters(this.map.Islands);
-        mapVisualizer.VisualizeBridges(this.map.Bridges);
-        
-       */
+    public Vector3 GetRandomSpawn()
+    {
+        int size = this.map.Size;
 
+        MapTile tile = new MapTile();
+
+        while(tile.Type != TileType.land)
+        {
+            int x = Random.Range(0, size);
+            int y = Random.Range(0, size);
+
+            tile = this.map.GetTile(new Vector2Int(x, y));
+
+        }
+
+        return new Vector3(tile.Position.x, 0, tile.Position.y);
     }
 }

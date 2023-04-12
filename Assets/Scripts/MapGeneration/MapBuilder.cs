@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class MapBuilder : MonoBehaviour
 {
+    public GameObject waterPlane;
+
     public RuleTile landTile;
     public Tilemap landTilemap;
     public RuleTile rockTile;
@@ -15,6 +17,9 @@ public class MapBuilder : MonoBehaviour
     public void BuildMap(Map map)
     {
         int size = map.Size;
+
+        waterPlane.transform.position = new Vector3(size / 2f, 0, size / 2f);
+        waterPlane.transform.localScale = new Vector3(size / 10f, 1, size / 10f);
         
         for(int i = 0; i < size; i++)
         {

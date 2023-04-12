@@ -255,6 +255,11 @@ public class Map
         return neighbours;
     }
 
+    public MapTile GetTile(Vector2Int pos)
+    {
+        return this.tilesMap[pos.x, pos.y];
+    }
+
     #endregion
 }
 

@@ -53,7 +53,7 @@ public static class IslandConnector
     private static int FindClosestIsland(List<Island> islands, int currentIsland, List<int> islandsToCompare)
     {
         float closestDistance = float.PositiveInfinity;
-        int closestIslandId = -1;
+        int closestIslandId = 0;
 
         Vector2Int currentIslandCenter = islands[currentIsland].CenterPointRounded;
 
